@@ -65,24 +65,30 @@ $NGS/angsd/angsd -bam
 
 1. What is the default base quality score filter
 
+#### Examples of I/O filters ####
 
-Below we have shown the base of the ANGSD command:
+Below are some examples of I/O filters for ANGSD that we will use today:
 
 ```
-# $NGS/angsd/angsd -b ALL.bams -ref $REF -out Results/ALL \
-#        -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
+# -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1
 ```
 
 These filters will retain only uniquely mapping reads, not tagged as bad, considering only proper pairs, without trimming, and adjusting for indel/mapping (as in samtools).
 `-C 50` reduces the effect of reads with excessive mismatches, while `-baq 1` computes base alignment quality as explained here ([BAQ](http://samtools.sourceforge.net/mpileup.shtml)) used to rule out false SNPs close to INDELS.
 
-We will use an additional set of filters throughout the exercise.
+We can also add filters related to the quality of the NGS data:
 ```
-#        -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1
+# -minMapQ 20 -minQ 20
 ```
-This will remove reads with mapping quality below 20, basequalities < 20 and sites where less that 5 individuals have reads mapping.
+This will remove reads with mapping quality below 20, basequalities < 20 and
 
-`-setMinDepth 7 -setMaxDepth 30` ensures that we only analyse sites with a minimum depth of 7 and maxmimum depth of 30.
+Criteria to exclude sites with low/high amounts of data can also be set:
+```
+# -minInd 5 -doCounts
+# -setMinDepth 7 -setMaxDepth 30
+```
+Sites where less that 5 individuals have reads mapping.
+This last filter ensures that we only analyse sites with a minimum depth of 7 and maxmimum depth of 30.
 
 ### Genotype Likelihoods ###
 We now wish to calculate the ***genotype likelihoods*** for each site at each individual.
@@ -114,6 +120,7 @@ Ignore the various warning messages
 
 1. What are the output files?
 2. What kind of information do they contain?
+3. How many columns are present in the `glf.gz` file? Is that excepted?
 
 
 ```
@@ -151,10 +158,11 @@ $NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR
 **QUESTION**
 1. How would the output files differ between `-doGeno 2` and `-doGeno 3`?
 2. What kind of prior have we used?
-3. How many sites have at least one missing genotype (-1)?
+3. How many sites in total and how many have at least one missing genotype (-1)?
 
 
 ```
+zcat Results/EUR.geno.gz | wc -l
 zcat Results/EUR.geno.gz | grep -1 - | wc -l
 ```
 3. Why is that?
@@ -168,12 +176,15 @@ $NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR
 
 4. How many sites do we have in total?
 5. How many sites have at least one missing genotype now?
+6. What has happened?
 
 ### EXERCISE 1  ###
 
 In this exercise we will use *ANGSD* to calculate the allele frequency of a variant in the EDAR gene in 5 human populations.
 
 The SNP of interest (rs3827760) is described in [this paper](http://www.nature.com/ncomms/2016/160519/ncomms11616/full/ncomms11616.html). Briefly,
+
+TODO
 
 
 The bam lists for each population can be found here:
@@ -201,6 +212,8 @@ We need to index this file in order for ANGSD to process it.
 $NGS/angsd/angsd sites index Data/snp.txt
 ```
 
+#### Build the ANGSD command ####
+
 Write the code that performs the following genotype calling for EDAR variants in all populations.
 You can directly call genotypes by adding the neccesary arguments. This way we do not need to first generate `.glf.gz` file.
 
@@ -208,10 +221,12 @@ You can directly call genotypes by adding the neccesary arguments. This way we d
 As an indication, you can follow these guidelines:
 - use the SAMtools genotype likelihood model
 - calculate genotype posterior probabilities using a HWE-based prior (allele frequencies)
+- Add the base filters shown in the I/O section (without min/max depth)
 - filter out bases with a quality score less than 20
 - filter our reads with a mapping quality score less than 20
 - use ony sites where you have at least one sample with data (-mindInd)
 - use -doMaf 1 (major and minor is fixed)
+- Skip triallelic sites
 - set genotypes as missing if the highest genotype probability is less than 0.50
 - Make sure to set major allele to ancestral ($ANC) hint: -doMajorMinor
 
