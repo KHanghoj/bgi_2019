@@ -105,7 +105,7 @@ For this exercise, we will use `-GL 2` (GATK) that was introduced in the lecture
 Run the following command:
 A possible command line to obtain genotype likelihoods could look like this be:
 ```
-$NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR \
+$NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR1 \
         -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
         -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
         -GL 2 -doGlf 4
@@ -122,12 +122,12 @@ where we specify:
 
 
 ```
-ls Results/EUR.*
+ls Results/EUR1.*
 ```
 
 ```
-less -S Results/EUR.arg
-less -S Results/EUR.glf.gz
+less -S Results/EUR1.arg
+less -S Results/EUR1.glf.gz
 ```
 
 
@@ -145,12 +145,12 @@ $NGS/angsd/angsd -doGeno
 
 Below is a two step command to call genotypes for the european population (`EUR.bams`)
 ```
-$NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR \
+$NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR2 \
     -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
         -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
     -GL 2 -doGlf 1
 
-$NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR \
+$NGS/angsd/angsd -glf Results/EUR2.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR \
     -doMajorMinor 1 -doGeno 3 -doPost 2 -doMaf 1
 ```
 
@@ -159,16 +159,21 @@ $NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR
 2. What kind of prior have we used?
 3. How many sites in total and how many have at least one missing genotype (-1)?
 ```
-zcat Results/EUR.geno.gz | wc -l
-zcat Results/EUR.geno.gz | grep -1 - | wc -l
+zcat Results/EUR2.geno.gz | wc -l
+zcat Results/EUR2.geno.gz | grep -1 - | wc -l
 ```
 3. Why is that?
 
 You can control how to set missing genotype when their confidence is low with `-postCutoff`.
 For instance, we can set as missing genotypes when their (highest) genotype posterior probability is below 0.95:
 ```
-$NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR \
+$NGS/angsd/angsd -glf Results/EUR3.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR \
         -doMajorMinor 1 -doGeno 3 -doPost 2 -doMaf 1 -postCutoff 0.95
+```
+
+```
+zcat Results/EUR3.geno.gz | wc -l
+zcat Results/EUR3.geno.gz | grep -1 - | wc -l
 ```
 
 4. How many sites do we have in total?
@@ -227,7 +232,7 @@ As an indication, you can follow these guidelines:
 ```bash
 for pop in AFR EUR EAS LAT NAM
 do
-    $NGS/angsd/angsd -b $DATA/${pop}.bams -out Results/EDAR.${pop} -sites Data/snp.txt ...
+    $NGS/angsd/angsd -b $DATA/${pop}.bams -out Results/EDAR.gt.${pop} -sites Data/snp.txt ...
 done
 ```
 
@@ -255,7 +260,7 @@ $NGS/angsd/angsd -doMajorMinor
 
 A possible command line to estimate allele frequencies might be (this may take 1 min to run):
 ```
-$NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR \
+$NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR4 \
         -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
         -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
         -GL 1 -doGlf 1 \
@@ -264,7 +269,7 @@ $NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR \
 
 Have a look at this file which contains estimates of allele frequency values.
 ```
-zcat Results/EUR.mafs.gz | head
+zcat Results/EUR4.mafs.gz | head
 ```
 
 `knownEM` column specifies the algorithm used to estimate the allele frequency (of the minor allele) which is given under that column.
@@ -283,11 +288,19 @@ It is evident that these sites are monomorphic. In order to to perform **SNP cal
 ### QUESTIONS ###
 
 1. How many variants with an minor allele frequency `>=5%`
-2. How many variants with an p-value `<=1e-6` hint: `snp\_pval 1e-6`
+2. How many variants with an p-value `<=1e-6` hint: `SNP\_pval 1e-6`
 
 
 ### EXERCISE II ###
 Now we have explored how to obtain allele frequencies without calling genotypes and how to obtain genotype probabilities. Lets recalculate allele frequencies of the EDAR variant for each population using the likelihood approach with the same filters that was used for the genotype calling procedure.
+
+```bash
+for pop in AFR EUR EAS LAT NAM
+do
+    $NGS/angsd/angsd -b $DATA/${pop}.bams -out Results/EDAR.gl.${pop} -sites Data/snp.txt ...
+done
+```
+
 
 1. What is the allele frequency for each populations? ([link](plots/af_gl.pdf))
 2. Are these estimates any different from those obtained from the genotype calling procedure?

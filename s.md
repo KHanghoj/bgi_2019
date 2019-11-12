@@ -15,3 +15,8 @@ done
 ```
 for POP in AFR EUR EAS LAT NAM; do echo -n "$POP " ;zcat Results/EDAR.${POP}.geno.gz | cut -f 5- | Rscript -e 'message(mean(scan("stdin", quiet=TRUE))/2)'; done
 ```
+
+
+```
+for POP in AFR EUR EAS LAT NAM; do echo -n "$POP " ;zcat Results/EDAR.${POP}.mafs.gz | sed '1d' | awk '{print $(NF-1)}'; done
+```
