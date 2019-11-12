@@ -1,0 +1,5 @@
+AFR 0
+EUR 0
+EAS 1
+LAT 0.15
+NAM 0.95
