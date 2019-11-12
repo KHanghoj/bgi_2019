@@ -1,7 +1,5 @@
 # Genotype likelihoods and SNP calling
 
-** ALways give links for the files **
-
 In this session you will learn how to do:
 * genotype calling
 * allele frequency estimation
@@ -119,8 +117,8 @@ where we specify:
 ** QUESTIONS **
 
 1. What are the output files?
-2. What kind of information do they contain?
-3. How many columns are present in the `glf.gz` file? Is that excepted?
+2. What kind of information do they contain? Hint: (-GL (see -doGlf))
+3. How many columns are present in the `glf.gz` file?
 
 
 ```
@@ -234,7 +232,7 @@ done
 ```
 
 **QUESTIONS**
-1. What is the allele frequency for each populations based on the genotype calls?
+1. What is the allele frequency for each populations based on the genotype calls (`geno.gz`)?
 2. Plot the allele frequencies for all the populations for this snp ([link](plots/af_gt.pdf))
 3. Do we observe between population differences?
 
@@ -285,7 +283,7 @@ It is evident that these sites are monomorphic. In order to to perform **SNP cal
 ### QUESTIONS ###
 
 1. How many variants with an minor allele frequency `>=5%`
-2. How many variants with an p-value `<=1e-6` hint: `snp pval 1e-6`
+2. How many variants with an p-value `<=1e-6` hint: `snp\_pval 1e-6`
 
 
 ### EXERCISE II ###
