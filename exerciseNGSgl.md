@@ -35,7 +35,7 @@ mkdir Data
 
 ### Workflow
 
-![stages](figures/stages.png)
+![stages](https://github.com/mfumagalli/Copenhagen/blob/master/Files/stages.png)
 
 This might seem a bit overwhelming at first, but we will go through every step in this exercise.
 
