@@ -19,7 +19,7 @@ More information about its rationale and implemented methods can be found [here]
 Briefly, you need to set the path to the software and various data that will be used.
 Also, you will have to create two folders on your working directory, one for your results and one for your intermediate data.
 
-PATHS MUST BE FIXED
+TODO: PATHS MUST BE FIXED
 
 ```
 NGS=/ricco/data/matteo/Software/ngsTools
@@ -82,10 +82,12 @@ We will use an additional set of filters throughout the exercise.
 ```
 This will remove reads with mapping quality below 20, basequalities < 20 and sites where less that 5 individuals have reads mapping.
 
-`-setMinDepth 7 -setMaxDepth 30` are per bam filters. They ensure that we only use sites with a depth between 7 and 30.
+`-setMinDepth 7 -setMaxDepth 30` ensures that we only analyse sites with a minimum depth of 7 and maxmimum depth of 30.
 
 ### Genotype Likelihoods ###
 We now wish to calculate the ***genotype likelihoods*** for each site at each individual.
+
+![stages1](https://github.com/mfumagalli/Copenhagen/blob/master/Files/stage1.png)
 
 To do so you need to specify which genotype likelihood model to use.
 ```
@@ -108,7 +110,7 @@ where we specify:
 
 Ignore the various warning messages
 
-** QUESTINS **
+** QUESTIONS **
 
 1. What are the output files?
 2. What kind of information do they contain?
@@ -126,8 +128,10 @@ less -S Results/EUR.glf.gz
 
 ### Genotype probability and Genotype Calling ###
 
-Here we will explore several ways to call genotypes from sequencing data.
-We will also calculate genotypes probabilities (aka posterior probability of the genotypes) to each site for each individual.
+Here, we will explore several ways to call genotypes from sequencing data.
+We will also calculate genotypes probabilities (aka posterior probability of the genotypes) for each site for each individual.
+
+![stages2](https://github.com/mfumagalli/Copenhagen/blob/master/Files/stage2.png)
 
 In ANGSD, the option to call genotypes is `-doGeno`:
 ```
@@ -145,8 +149,10 @@ $NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR
 ```
 
 **QUESTION**
-1. What files will be produced when with `-doGeno 3`?
-2. How many sites have at least one missing genotype (-1)?
+1. How would the output files differ between `-doGeno 2` and `-doGeno 3`?
+2. What kind of prior have we used?
+3. How many sites have at least one missing genotype (-1)?
+
 
 ```
 zcat Results/EUR.geno.gz | grep -1 - | wc -l
@@ -163,13 +169,11 @@ $NGS/angsd/angsd -glf Results/EUR.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR
 4. How many sites do we have in total?
 5. How many sites have at least one missing genotype now?
 
-
-
 ### EXERCISE 1  ###
 
 In this exercise we will use *ANGSD* to calculate the allele frequency of a variant in the EDAR gene in 5 human populations.
 
-The SNP of interest (rs3827760) is described in [this paper](http://www.nature.com/ncomms/2016/160519/ncomms11616/full/ncomms11616.html).
+The SNP of interest (rs3827760) is described in [this paper](http://www.nature.com/ncomms/2016/160519/ncomms11616/full/ncomms11616.html). Briefly,
 
 
 The bam lists for each population can be found here:
@@ -198,31 +202,31 @@ $NGS/angsd/angsd sites index Data/snp.txt
 ```
 
 Write the code that performs the following genotype calling for EDAR variants in all populations.
-Also, you can directly call genotypes without generating the genotype likelihood files, by starting from bam files directly.
+You can directly call genotypes by adding the neccesary arguments. This way we do not need to first generate `.glf.gz` file.
+
+
 As an indication, you can follow these guidelines:
 - use the SAMtools genotype likelihood model
-- calculate genotype posterior probabilities using a HWE-based prior
+- calculate genotype posterior probabilities using a HWE-based prior (allele frequencies)
 - filter out bases with a quality score less than 20
 - filter our reads with a mapping quality score less than 20
 - use ony sites where you have at least one sample with data (-mindInd)
-- do not set any filtering based on min and max depth
-- use -doMajorMinor 1 and -doMaf 1 options
+- use -doMaf 1 (major and minor is fixed)
 - set genotypes as missing if the highest genotype probability is less than 0.50
-but feel free to choose some parameters yourself.
-
+- Make sure to set major allele to ancestral ($ANC) hint: -doMajorMinor
 
 
 ```bash
 for pop in AFR EUR EAS LAT NAM
 do
-    $NGS/angsd/angsd -b $DATA/${pop}.bams -out Results/${pop} -sites Data/snp.txt
+    $NGS/angsd/angsd -b $DATA/${pop}.bams -out Results/EDAR.${pop} -sites Data/snp.txt ...
 done
 ```
 
 **QUESTIONS**
-1. What is the allele frequency for each populations?
-2. Do you observe a difference between the populations?
-
+1. What is the allele frequency for each populations based on the genotype calls?
+2. Plot the allele frequencies for all the populations for this snp
+3. Do we observe between population differences?
 
 
 ### SNP calling ###
@@ -247,7 +251,7 @@ $NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR \
         -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
         -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
         -GL 1 -doGlf 1 \
-    -doMajorMinor 1 -doMaf 1
+        -doMajorMinor 1 -doMaf 1
 ```
 
 Have a look at this file which contains estimates of allele frequency values.
@@ -255,6 +259,27 @@ Have a look at this file which contains estimates of allele frequency values.
 zcat Results/EUR.mafs.gz | head
 ```
 
-`knownEM` specifies the algorithm used to estimate the allele frequency (of the minor allele) which is given under that column.
+`knownEM` column specifies the algorithm used to estimate the allele frequency (of the minor allele) which is given under that column.
 
-3.
+It is evident that these sites are monomorphic. In order to to perform **SNP calling**, we can use two different approaches:
+
+```
+        -minMaf         0.000000        (Remove sites with MAF below)
+        -SNP_pval       1.000000        (Remove sites with a pvalue larger)
+```
+
+`-minMaf` is a hard filter of the estimated allele frequency
+
+`-SNP_pval` is drawn from a chisq distribution based on a likelihood ratio test.
+
+### QUESTIONS ###
+
+1. How many variants with an minor allele frequency `>=5%`
+2. How many variants with an p-value `<=1e-6` hint: `snp pval 1e-6`
+
+
+### EXERCISE II ###
+Now we have explored how to obtain allele frequencies without calling genotypes and how to obtain genotype probabilities. Lets recalculate allele frequencies of the EDAR variant for each population using the likelihood approach.
+
+1. What is the allele frequency for each populations?
+2. Are these estimates any different from those obtained from the genotype calling procedure?
