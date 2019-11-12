@@ -5,5 +5,5 @@ dev.off()
 
 df<- read.table("af_gl.txt", row.names=1)
 pdf("af_gl.pdf")
-barplot(t(df), main = "AF based on GL genotypes")
+barplot(t(df), main = "AF based on Genotype Likelihoods")
 dev.off()
