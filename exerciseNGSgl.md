@@ -235,7 +235,7 @@ done
 
 **QUESTIONS**
 1. What is the allele frequency for each populations based on the genotype calls?
-2. Plot the allele frequencies for all the populations for this snp ([link](plots/af_gt.png))
+2. Plot the allele frequencies for all the populations for this snp ([link](plots/af_gt.pdf))
 3. Do we observe between population differences?
 
 
@@ -291,6 +291,6 @@ It is evident that these sites are monomorphic. In order to to perform **SNP cal
 ### EXERCISE II ###
 Now we have explored how to obtain allele frequencies without calling genotypes and how to obtain genotype probabilities. Lets recalculate allele frequencies of the EDAR variant for each population using the likelihood approach with the same filters that was used for the genotype calling procedure.
 
-1. What is the allele frequency for each populations? ([link](plots/af_gl.png))
+1. What is the allele frequency for each populations? ([link](plots/af_gl.pdf))
 2. Are these estimates any different from those obtained from the genotype calling procedure?
 3. If any, what could the reason for the difference be due to?
