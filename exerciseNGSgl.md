@@ -245,6 +245,8 @@ done
 ### SNP calling ###
 In the last section, we will calculate the allele frequency without using called genotypes. Instead we will estimate allele frequencies taking into account the uncertainty in the data by using genotype likelihoods.
 
+![stages3](https://github.com/mfumagalli/Copenhagen/blob/master/Files/stage3.png)
+
 Have a look at `-doMaf`
 
 ```
