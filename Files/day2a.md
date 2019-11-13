@@ -292,11 +292,6 @@ This script will also plot the PBS variation in AFR as a control comparison.
 evince Results/NAM.pbs.pdf
 ```
 
-**EXERCISE**
-
-Calculate PBS assuming EAS as target population.
-Can you reproduce previous claims of selection EDAR using this approach?
-
 -------------------------
 
 #### 3. Nucleotide diversity
