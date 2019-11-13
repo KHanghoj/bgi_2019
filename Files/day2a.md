@@ -15,7 +15,7 @@ DIR=/home/thorfinn/Copenhagen
 DATA=/ricco/data/bgi19/thorfinn/Data
 REF=$DATA/ref.fa.gz
 ANC=$DATA/anc.fa.gz
-
+mkdir Results
 ```
 
 As reference, these are the labelling for each population:
