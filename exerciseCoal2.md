@@ -79,12 +79,32 @@ wrapper <- function(nnodes,theta){
 
 ```
 
+Try to visualize the sfs for a single tree
 ```
-plot.phylo(coal(5)$phyl)
-barplot(rowMeans(replicate(100,wrapper(20,20)$sfs)))
+T20 <- wrapper(20,10)
+barplot(T20$sfs)
+```
+How does it look? The SFS is normally estimated genomwide how many
+sites do we have
+```
 
-sfs <- rowMeans(replicate(1000,wrapper(20,20)$sfs))
-#watterson
+```
+ncol(T20$seqs)
+```
+
+Lets try to make more realizations:
+
+```
+barplot(rowMeans(replicate(10,wrapper(20,10)$sfs)))
+barplot(rowMeans(replicate(100,wrapper(20,10)$sfs)))
+barplot(rowMeans(replicate(1000,wrapper(20,10)$sfs)))
+```
+
+Let us also try to estimate theta using both watterson and tajima
+
+
+sfs <- rowMeans(replicate(1000,wrapper(20,10)$sfs))
+##watterson
 sum(sfs)/sum(1/(1:19))
 ##pi
 sum(0:20*20:0*sfs)/choose(20,2)
