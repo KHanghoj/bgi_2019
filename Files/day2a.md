@@ -73,7 +73,7 @@ We cycle across all populations and compute SAF files:
 for POP in AFR EUR EAS NAM
 do
         echo $POP
-        $NGS/angsd/angsd -b $DATA/$POP.bams -ref $REF -anc $ANC -out Results/$POP \
+        $NGS/angsd/angsd -b $DATA/$POP.bams.list -ref $REF -anc $ANC -out Results/$POP \
                 -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
                 -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
                 -GL 1 -doSaf 1
