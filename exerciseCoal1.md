@@ -59,3 +59,5 @@ rowMeans(replicate(10,coal(5)$tks))-1/choose(5:2,2)
 rowMeans(replicate(100,coal(5)$tks))-1/choose(5:2,2)
 rowMeans(replicate(10000,coal(5)$tks))-1/choose(5:2,2)
 ```
+
+![alt text](https://github.com/KHanghoj/bgi_2019/blob/master/Tree0.png)
