@@ -114,7 +114,7 @@ where we specify:
 * -GL 2: genotype likelihood model as in GATK
 * -doGlf 4: output in text format
 
-** QUESTIONS **
+**QUESTIONS**
 
 1. What are the output files?
 2. What kind of information do they contain? Hint: (-GL (see -doGlf))
