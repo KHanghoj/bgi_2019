@@ -332,13 +332,9 @@ cat Results/NAM.thetas.idx.pestPG
 less -S Results/NAM.thetas.windows.pestPG
 ```
 
-**EXERCISE**
-
-Replicate the previous findings of lower genetic diversity in _EDAR_ for East Asians.
 
 ------------------------
 
-[HOME](https://github.com/mfumagalli/Copenhagen)
 
 
 
