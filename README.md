@@ -14,9 +14,13 @@ https://github.com/KHanghoj/bgi_2019/blob/master/exerciseWF.md
 
 Exercise2
 
-https://github.com/KHanghoj/bgi_2019/blob/master/exerciseCoal.md
+https://github.com/KHanghoj/bgi_2019/blob/master/exerciseCoal1.md
 
 Exercise3
+
+https://github.com/KHanghoj/bgi_2019/blob/master/exerciseCoal2.md
+
+Exercise4
 
 This exercise is heavily inspired by mfumagallis exercise
 
