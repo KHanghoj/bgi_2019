@@ -287,7 +287,7 @@ It is evident that these sites are monomorphic. In order to to perform **SNP cal
 
 `-SNP_pval` is drawn from a chisq distribution based on a likelihood ratio test.
 
-### QUESTIONS ###
+**QUESTIONS**
 
 1. How many variants with an minor allele frequency `>=5%`
 2. How many variants with an p-value `<=1e-6` hint: `SNP\_pval 1e-6`
