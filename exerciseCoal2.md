@@ -101,7 +101,7 @@ barplot(rowMeans(replicate(1000,wrapper(20,10)$sfs)))
 
 Let us also try to estimate theta using both watterson and tajima
 
-
+```
 sfs <- rowMeans(replicate(1000,wrapper(20,10)$sfs))
 ##watterson
 sum(sfs)/sum(1/(1:19))
