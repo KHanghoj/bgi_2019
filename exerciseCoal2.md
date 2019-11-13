@@ -86,7 +86,6 @@ barplot(T20$sfs)
 ```
 How does it look? The SFS is normally estimated genomwide how many
 sites do we have
-```
 
 ```
 ncol(T20$seqs)
