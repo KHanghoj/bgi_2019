@@ -9,10 +9,10 @@ Specifically, you will learn how to estimate:
 
 Please make sure to follow the preparatory instructions on the main page before running these examples.
 ```
-NGS=/ricco/data/matteo/Software/ngsTools
+NGS=/ricco/data/bgi19/thorfinn/Software/ngsTools
 
-DIR=/home/matteo/Copenhagen
-DATA=/ricco/data/matteo/Data
+DIR=/home/thorfinn/Copenhagen
+DATA=/ricco/data/bgi19/thorfinn/Data
 REF=$DATA/ref.fa.gz
 ANC=$DATA/anc.fa.gz
 
