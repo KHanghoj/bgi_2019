@@ -150,7 +150,7 @@ $NGS/angsd/angsd -b $DATA/EUR.bams -ref $REF -out Results/EUR2 \
         -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
     -GL 2 -doGlf 1
 
-$NGS/angsd/angsd -glf Results/EUR2.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR \
+$NGS/angsd/angsd -glf Results/EUR2.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR2 \
     -doMajorMinor 1 -doGeno 3 -doPost 2 -doMaf 1
 ```
 
@@ -167,7 +167,7 @@ zcat Results/EUR2.geno.gz | grep -1 - | wc -l
 You can control how to set missing genotype when their confidence is low with `-postCutoff`.
 For instance, we can set as missing genotypes when their (highest) genotype posterior probability is below 0.95:
 ```
-$NGS/angsd/angsd -glf Results/EUR3.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR \
+$NGS/angsd/angsd -glf Results/EUR2.glf.gz -fai $REF.fai -nInd 10 -out Results/EUR3 \
         -doMajorMinor 1 -doGeno 3 -doPost 2 -doMaf 1 -postCutoff 0.95
 ```
 
