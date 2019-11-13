@@ -22,20 +22,20 @@ Try 6 different realizations with a population of 200  and overlay the results:
 
 ```
 wf_freq(f=0.5,n=200,g=2000,new=T,col=1)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=2)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=3)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=4)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=5)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=6)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=2)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=3)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=4)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=5)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=6)
 ```
 
 Try 6 different realizations with a population of 1000  and overlay the results:
 
 ```
 wf_freq(f=0.5,n=200,g=2000,new=T,col=1)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=2)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=3)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=4)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=5)
-wf_freq(f=0.5,n=200,g=2000,new=T,col=6)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=2)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=3)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=4)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=5)
+wf_freq(f=0.5,n=200,g=2000,new=F,col=6)
 ```
