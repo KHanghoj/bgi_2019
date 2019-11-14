@@ -1,12 +1,11 @@
-This is an R based exercise. Either implement your own gene genealogy
-generator, or copy paste the code below in an R session. 
 
 For this exercise you new to use the R packages `ape`. If it is not installed on your laptop you can run the following code:
 
 ```R
 install.packages("ape")
 ```
-
+This is an R based exercise. Either implement your own gene genealogy
+generator, or copy paste the code below in an R session. 
 
 ```
 library(ape)
