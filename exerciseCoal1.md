@@ -42,7 +42,6 @@ plot.phylo(coal(5)$phyl)
 plot.phylo(coal(5)$phyl)
 plot.phylo(coal(5)$phyl)
 plot.phylo(coal(5)$phyl)
-plot.phylo(coal(5)$phyl)
 ```
 
 The expected interarrival times are given by 1/(k(k-1)/2). The
